@@ -6,7 +6,7 @@
 
 body {
     display: flex;
-    background: #ef62da;
+    background: #2d630d;
     min-height: 100vh;
     padding: 0 10px;
     align-items: center;
@@ -14,7 +14,7 @@ body {
 }
 
 .calendar-container {
-    background: #fff;
+    background: #FFD700;
     width: 450px;
     border-radius: 10px;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
@@ -78,9 +78,10 @@ header .calendar-current-date {
     color: #414141;
 }
 
-.calendar-body .calendar-weekdays li {
+.calendar-body .calendar-days li {
     cursor: default;
-    font-weight: 500;
+    font-weight: 50;
+    font-size: 0.85rem;
 }
 
 .calendar-body .calendar-dates li {
@@ -111,7 +112,7 @@ header .calendar-current-date {
 }
 
 .calendar-dates li.active::before {
-    background: #6332c5;
+    background: #5f9c52;
 }
 
 .calendar-dates li:not(.active):hover::before {
