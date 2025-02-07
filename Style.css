@@ -5,12 +5,27 @@
 }
 
 body {
-    display: flex;
     background: #2d630d;
     min-height: 100vh;
-    padding: 0 10px;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    padding: 20px;
+    position: relative;
+    gap: 50px;
+}
+
+.header-content {
+    text-align: center;
+    color: white;
+    margin-bottom: 30px;
+}
+
+.header-content h1 {
+    margin-bottom: 10px;
 }
 
 .calendar-container {
@@ -18,6 +33,7 @@ body {
     width: 450px;
     border-radius: 10px;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    margin-top: 30px;
 }
 
 .calendar-container header {
@@ -34,14 +50,16 @@ header .calendar-navigation {
 header .calendar-navigation span {
     height: 38px;
     width: 38px;
-    margin: 0 1px;
+    margin: 0 8px;
     cursor: pointer;
     text-align: center;
     line-height: 38px;
     border-radius: 50%;
     user-select: none;
-    color: #aeabab;
+    color: #333;
     font-size: 1.9rem;
+    font-weight: bold;
+    background: #f0f0f0;
 }
 
 .calendar-navigation span:last-child {
@@ -117,4 +135,66 @@ header .calendar-current-date {
 
 .calendar-dates li:not(.active):hover::before {
     background: #e4e1e1;
+}
+
+.calendar-dates li.has-events::after {
+    content: "•";
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #2d630d;
+    font-size: 20px;
+}
+
+.events-popup {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: calc(100% + 20px);
+    width: 280px;
+    background: linear-gradient(135deg, #2d630d, #FFD700);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.popup-header h3 {
+    color: white;
+    margin: 0;
+}
+
+.close-popup {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.popup-content {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+@media (max-width: 1200px) {
+    .events-popup {
+        left: auto;
+        right: calc(100% + 20px);
+    }
+}
+
+.calendar-section {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
 }

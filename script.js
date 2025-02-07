@@ -26,57 +26,104 @@ const months = [
     "December"
 ];
 
-// Function to generate the calendar
-const manipulate = () => {
+// Store events data
+let events = [];
 
-    // Get the first day of the month
-    let dayone = new Date(year, month, 1).getDay();
-
-    // Get the last date of the month
-    let lastdate = new Date(year, month + 1, 0).getDate();
-
-    // Get the day of the last date of the month
-    let dayend = new Date(year, month, lastdate).getDay();
-
-    // Get the last date of the previous month
-    let monthlastdate = new Date(year, month, 0).getDate();
-
-    // Variable to store the generated calendar HTML
-    let lit = "";
-
-    // Loop to add the last dates of the previous month
-    for (let i = dayone; i > 0; i--) {
-        lit +=
-            `<li class="inactive">${monthlastdate - i + 1}</li>`;
+// Function to fetch and parse CSV
+async function loadEvents() {
+    try {
+        const response = await fetch('henry High - Sheet1.csv');
+        const csvText = await response.text();
+        const rows = csvText.split('\n').slice(1); // Skip header row
+        
+        events = rows.map(row => {
+            const [date, event, description] = row.split(',');
+            return {
+                date: new Date(date),
+                event: event.trim(),
+                description: description.trim()
+            };
+        });
+    } catch (error) {
+        console.error('Error loading events:', error);
     }
-
-    // Loop to add the dates of the current month
-    for (let i = 1; i <= lastdate; i++) {
-
-        // Check if the current date is today
-        let isToday = i === date.getDate()
-        && month === new Date().getMonth()
-        && year === new Date().getFullYear()
-            ? "active"
-            : "";
-        lit += `<li class="${isToday}">${i}</li>`;
-    }
-
-    // Loop to add the first dates of the next month
-    for (let i = dayend; i < 6; i++) {
-        lit += `<li class="inactive">${i - dayend + 1}</li>`
-    }
-
-    // Update the text of the current date element
-    // with the formatted current month and year
-    currdate.innerText = `${months[month]} ${year}`;
-
-    // update the HTML of the dates element
-    // with the generated calendar
-    day.innerHTML = lit;
 }
 
-manipulate();
+// Function to generate the calendar
+const manipulate = () => {
+    let dayone = new Date(year, month, 1).getDay();
+    let lastdate = new Date(year, month + 1, 0).getDate();
+    let dayend = new Date(year, month, lastdate).getDay();
+    let monthlastdate = new Date(year, month, 0).getDate();
+    let lit = "";
+
+    // Previous month dates
+    for (let i = dayone; i > 0; i--) {
+        lit += `<li class="inactive">${monthlastdate - i + 1}</li>`;
+    }
+
+    // Current month dates
+    for (let i = 1; i <= lastdate; i++) {
+        let isToday = i === date.getDate() && month === new Date().getMonth() 
+            && year === new Date().getFullYear() ? "active" : "";
+            
+        // Check if date has events
+        const currentDate = new Date(year, month, i);
+        const hasEvents = events.some(event => 
+            event.date.toDateString() === currentDate.toDateString());
+        const hasEventsClass = hasEvents ? "has-events" : "";
+        
+        lit += `<li class="${isToday} ${hasEventsClass}" data-date="${currentDate.toISOString()}">${i}</li>`;
+    }
+
+    // Next month dates
+    for (let i = dayend; i < 6; i++) {
+        lit += `<li class="inactive">${i - dayend + 1}</li>`;
+    }
+
+    currdate.innerText = `${months[month]} ${year}`;
+    day.innerHTML = lit;
+    
+    // Add click handlers to dates
+    attachDateClickHandlers();
+}
+
+function attachDateClickHandlers() {
+    const dateElements = document.querySelectorAll('.calendar-dates li:not(.inactive)');
+    dateElements.forEach(dateElement => {
+        dateElement.addEventListener('click', showEventsPopup);
+    });
+}
+
+function showEventsPopup(e) {
+    const dateStr = e.target.getAttribute('data-date');
+    const clickedDate = new Date(dateStr);
+    const dayEvents = events.filter(event => 
+        event.date.toDateString() === clickedDate.toDateString());
+    
+    const popup = document.getElementById('events-popup');
+    const content = popup.querySelector('.popup-content');
+    
+    if (dayEvents.length > 0) {
+        content.innerHTML = dayEvents.map(event => `
+            <div class="event-item">
+                <h4>${event.event}</h4>
+                <p>${event.description}</p>
+            </div>
+        `).join('');
+    } else {
+        content.innerHTML = '<p>No events for this date</p>';
+    }
+    
+    popup.style.display = 'block';
+}
+
+// Close popup when clicking the close button
+document.querySelector('.close-popup').addEventListener('click', () => {
+    document.getElementById('events-popup').style.display = 'none';
+});
+
+loadEvents().then(() => manipulate());
 
 // Attach a click event listener to each icon
 prenexIcons.forEach(icon => {
