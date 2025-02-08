@@ -38,19 +38,23 @@ body {
 
 .calendar-container header {
     display: flex;
+    flex-direction: column;
     align-items: center;
     padding: 25px 30px 10px;
-    justify-content: space-between;
+    gap: 10px;
 }
 
 header .calendar-navigation {
     display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-sizing: border-box;
 }
 
 header .calendar-navigation span {
     height: 38px;
     width: 38px;
-    margin: 0 8px;
     cursor: pointer;
     text-align: center;
     line-height: 38px;
@@ -59,11 +63,10 @@ header .calendar-navigation span {
     color: #333;
     font-size: 1.9rem;
     font-weight: bold;
-    background: #f0f0f0;
 }
 
 .calendar-navigation span:last-child {
-    margin-right: -10px;
+    margin-right: 0;
 }
 
 header .calendar-navigation span:hover {
@@ -140,7 +143,7 @@ header .calendar-current-date {
 .calendar-dates li.has-events::after {
     content: "•";
     position: absolute;
-    bottom: -12px;
+    bottom: -15px;
     left: 50%;
     transform: translateX(-50%);
     color: #2d630d;
@@ -150,8 +153,9 @@ header .calendar-current-date {
 .events-popup {
     display: none;
     position: absolute;
-    top: 0;
-    left: calc(100% + 20px);
+    left: 50%;
+    transform: translateX(-50%);
+    top: calc(100% + 20px);
     width: 280px;
     background: linear-gradient(135deg, #2d630d, #FFD700);
     border-radius: 10px;
@@ -185,16 +189,72 @@ header .calendar-current-date {
     padding: 10px;
 }
 
-@media (max-width: 1200px) {
-    .events-popup {
-        left: auto;
-        right: calc(100% + 20px);
-    }
-}
-
 .calendar-section {
     position: relative;
     display: flex;
     align-items: flex-start;
     gap: 20px;
+}
+
+.weather-widget {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    color: white;
+    backdrop-filter: blur(5px);
+    width: 250px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.weather-info {
+    text-align: center;
+}
+
+.weather-info h3 {
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.weather-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.temperature {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.description {
+    text-transform: capitalize;
+    font-size: 1.2rem;
+    margin-top: 5px;
+}
+
+.weather-icon {
+    margin: 10px 0;
+}
+
+.weather-icon img {
+    width: 50px;
+    height: 50px;
+}
+
+.loading-spinner {
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 3px solid #fff;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
