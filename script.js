@@ -30,7 +30,7 @@ const months = [
 let events = [];
 
 // Add this at the beginning of your script.js file
-const WEATHER_API_KEY = process.env.API_KEY;
+const WEATHER_API_KEY = process.env.API-KEY;
 const CITY = 'San Diego';
 
 // Function to fetch and parse CSV
