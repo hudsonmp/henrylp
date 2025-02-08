@@ -29,9 +29,8 @@ const months = [
 // Store events data
 let events = [];
 
-// Add this at the beginning of your script.js file
+// Replace the API key implementation at the top
 const WEATHER_API_KEY = process.env.API-KEY;
-const CITY = 'San Diego';
 
 // Function to fetch and parse CSV
 async function loadEvents() {
@@ -165,24 +164,18 @@ prenexIcons.forEach(icon => {
     });
 });
 
+// Add error handling for weather fetch
 async function fetchWeather() {
     try {
-        // Updated URL format according to documentation
         const url = `https://api.openweathermap.org/data/2.5/weather?q=San Diego,US&units=imperial&appid=${WEATHER_API_KEY}`;
-        console.log('Fetching weather from:', url); // Debug URL
-
         const response = await fetch(url);
         
         if (!response.ok) {
-            const errorData = await response.json();
-            console.error('Weather API Error:', errorData);
-            throw new Error(`Weather API error: ${errorData.message}`);
+            throw new Error('Weather API error');
         }
         
         const data = await response.json();
-        console.log('Weather data received:', data);
         
-        // Update the weather widget
         const temperatureElement = document.querySelector('.temperature');
         const descriptionElement = document.querySelector('.description');
         const iconElement = document.querySelector('.weather-icon');
@@ -190,25 +183,24 @@ async function fetchWeather() {
         if (temperatureElement && descriptionElement) {
             temperatureElement.textContent = `${Math.round(data.main.temp)}°F`;
             descriptionElement.textContent = data.weather[0].description;
-            
-            // Updated icon URL to use HTTPS
             const iconCode = data.weather[0].icon;
             iconElement.innerHTML = `<img src="https://openweathermap.org/img/wn/${iconCode}@2x.png" alt="Weather icon">`;
         }
-        
     } catch (error) {
-        console.error('Detailed error:', error);
-        
+        console.error('Weather fetch error:', error);
         const temperatureElement = document.querySelector('.temperature');
         const descriptionElement = document.querySelector('.description');
+        const iconElement = document.querySelector('.weather-icon');
         
-        if (temperatureElement && descriptionElement) {
-            temperatureElement.textContent = 'Error';
-            descriptionElement.textContent = error.message || 'Weather data unavailable';
-        }
+        temperatureElement.textContent = 'N/A';
+        descriptionElement.textContent = 'Weather unavailable';
+        iconElement.innerHTML = '';
     }
 }
 
-// Call fetchWeather immediately and then every 5 minutes
-fetchWeather();
-setInterval(fetchWeather, 5 * 60 * 1000);
+// Call the weather fetch when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    fetchWeather();
+    // Refresh weather every 5 minutes
+    setInterval(fetchWeather, 300000);
+});

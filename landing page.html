@@ -6,6 +6,8 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="Style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="script.js" defer></script>
     <title>Welcome to Henry High!</title>
 </head>
 <body>
@@ -27,40 +29,41 @@
             </div>
     </div>
         <div class="calendar-section">
-            <div class="calendar-container">
-                <header class="calendar-header">
-                    <p class="calendar-current-date"></p>
-                    <div class="calendar-navigation">
-                        <span id="calendar-prev" class="material-symbols-rounded">
-                            prev
-                        </span>
-                        <span id="calendar-next" class="material-symbols-rounded">
-                            next
-                        </span>
+            <div class="calendar-wrapper">
+                <div class="calendar-container">
+                    <header class="calendar-header">
+                        <p class="calendar-current-date"></p>
+                        <div class="calendar-navigation">
+                            <span id="calendar-prev" class="material-symbols-rounded">
+                                prev
+                            </span>
+                            <span id="calendar-next" class="material-symbols-rounded">
+                                next
+                            </span>
+                        </div>
+                    </header>
+                    <div class="calendar-body">
+                        <ul class="calendar-days">
+                            <li>Sun</li>
+                            <li>Mon</li>
+                            <li>Tues</li>
+                            <li>Wed</li>
+                            <li>Thur</li>
+                            <li>Fri</li>
+                            <li>Sat</li>
+                        </ul>
+                        <ul class="calendar-dates"></ul>
                     </div>
-                </header>
-                <div class="calendar-body">
-                    <ul class="calendar-days">
-                        <li>Sun</li>
-                        <li>Mon</li>
-                        <li>Tues</li>
-                        <li>Wed</li>
-                        <li>Thur</li>
-                        <li>Fri</li>
-                        <li>Sat</li>
-                    </ul>
-                    <ul class="calendar-dates"></ul>
                 </div>
-            </div>
-            <div id="events-popup" class="events-popup">
-                <div class="popup-header">
-                    <h3>Events</h3>
-                    <button class="close-popup">×</button>
+                <div id="events-popup" class="events-popup">
+                    <div class="popup-header">
+                        <h3>Events</h3>
+                        <button class="close-popup">×</button>
+                    </div>
+                    <div class="popup-content"></div>
                 </div>
-                <div class="popup-content"></div>
             </div>
         </div>
     </div>
-    <script src="script.js"></script>
 </body>
 </html>

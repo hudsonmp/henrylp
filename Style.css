@@ -1,3 +1,4 @@
+/* Base reset for all elements */
 * {
     margin: 0;
     padding: 0;
@@ -9,13 +10,14 @@ body {
     min-height: 100vh;
 }
 
+/* Main container uses flex column layout to stack children vertically */
 .main-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; /* Centers children horizontally */
     padding: 20px;
     position: relative;
-    gap: 50px;
+    gap: 50px; /* Adds vertical spacing between children */
 }
 
 .header-content {
@@ -36,6 +38,7 @@ body {
     margin-top: 30px;
 }
 
+/* Calendar header uses flex column to stack navigation and date */
 .calendar-container header {
     display: flex;
     flex-direction: column;
@@ -44,6 +47,7 @@ body {
     gap: 10px;
 }
 
+/* Navigation uses flex row to place prev/next buttons on opposite sides */
 header .calendar-navigation {
     display: flex;
     width: 100%;
@@ -82,6 +86,7 @@ header .calendar-current-date {
     padding: 20px;
 }
 
+/* Calendar grid uses flex with wrap to create 7-column layout */
 .calendar-body ul {
     list-style: none;
     flex-wrap: wrap;
@@ -150,19 +155,37 @@ header .calendar-current-date {
     font-size: 20px;
 }
 
+.calendar-section {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.calendar-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.calendar-container {
+    flex: 0 0 450px; /* Fixed width for calendar */
+    background: #FFD700;
+    border-radius: 10px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
 .events-popup {
-    display: none;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: calc(100% + 20px);
-    width: 280px;
+    flex: 0 0 280px; /* Fixed width for popup */
+    display: block; /* Changed from none to block */
+    position: relative; /* Changed from absolute */
     background: linear-gradient(135deg, #2d630d, #FFD700);
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
+/* Popup header uses flex to place title and close button on opposite sides */
 .popup-header {
     display: flex;
     justify-content: space-between;
@@ -189,13 +212,6 @@ header .calendar-current-date {
     padding: 10px;
 }
 
-.calendar-section {
-    position: relative;
-    display: flex;
-    align-items: flex-start;
-    gap: 20px;
-}
-
 .weather-widget {
     background: rgba(255, 255, 255, 0.3);
     border-radius: 10px;
@@ -207,6 +223,7 @@ header .calendar-current-date {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Weather widget uses flex column for vertical stacking */
 .weather-info {
     text-align: center;
 }
