@@ -30,7 +30,7 @@ const months = [
 let events = [];
 
 // Add this at the beginning of your script.js file
-const WEATHER_API_KEY = 'e79b884fd5d5be315c449c01c75d070c'; // You'll need to sign up at OpenWeatherMap to get an API key
+const WEATHER_API_KEY = process.env.API_KEY;
 const CITY = 'San Diego';
 
 // Function to fetch and parse CSV
